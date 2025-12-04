@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Rolex-inspired Luxury Theme: Green & Gold */
+  /* Primary: Rolex Green - Darker, more iconic */
+  /* Accent: Rolex Gold */
+
+  --color-background: oklch(0.99 0.002 100);
+  --color-foreground: oklch(0.18 0.02 75);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.18 0.02 75);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.18 0.02 75);
+
+  /* Rolex Green - Darker, richer green */
+  --color-primary: oklch(0.35 0.1 155);
+  --color-primary-foreground: oklch(0.99 0.01 100);
+
+  /* Soft cream/champagne for secondary */
+  --color-secondary: oklch(0.96 0.02 85);
+  --color-secondary-foreground: oklch(0.25 0.02 75);
+
+  /* Muted with warm undertone */
+  --color-muted: oklch(0.96 0.01 85);
+  --color-muted-foreground: oklch(0.5 0.02 75);
+
+  /* Gold accent */
+  --color-accent: oklch(0.75 0.12 85);
+  --color-accent-foreground: oklch(0.2 0.03 75);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.985 0 0);
+
+  /* Subtle warm border */
+  --color-border: oklch(0.9 0.015 85);
+  --color-input: oklch(0.92 0.01 85);
+
+  /* Ring matches primary green */
+  --color-ring: oklch(0.35 0.1 155);
+
+  /* Custom gold color for special elements */
+  --color-gold: oklch(0.75 0.12 85);
+  --color-gold-foreground: oklch(0.2 0.03 75);
+
+  /* Animation durations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+html,
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+}
+
+/* Custom utilities for Shadcn compatibility */
+@layer utilities {
+
+  /* Ring offset background - maps to background color */
+  .ring-offset-background {
+    --tw-ring-offset-color: var(--color-background);
+  }
+
+  /* Gold text utility */
+  .text-gold {
+    color: var(--color-gold);
+  }
+
+  /* Gold background utility */
+  .bg-gold {
+    background-color: var(--color-gold);
+  }
+
+  /* Gold gradient for luxury feel */
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, oklch(0.78 0.11 85), oklch(0.7 0.13 80));
+  }
+
+  /* Success color - green variant */
+  .text-success {
+    color: oklch(0.45 0.12 155);
+  }
+
+  .bg-success {
+    background-color: oklch(0.45 0.12 155);
+  }
+}
+
+/* Animation utilities for Radix components */
+@layer utilities {
+  .animate-in {
+    animation-name: enter;
+    animation-duration: 150ms;
+    --tw-enter-opacity: initial;
+    --tw-enter-scale: initial;
+    --tw-enter-translate-x: initial;
+    --tw-enter-translate-y: initial;
+  }
+
+  .animate-out {
+    animation-name: exit;
+    animation-duration: 150ms;
+    --tw-exit-opacity: initial;
+    --tw-exit-scale: initial;
+    --tw-exit-translate-x: initial;
+    --tw-exit-translate-y: initial;
+  }
+
+  .fade-in-0 {
+    --tw-enter-opacity: 0;
+  }
+
+  .fade-out-0 {
+    --tw-exit-opacity: 0;
+  }
+
+  .zoom-in-95 {
+    --tw-enter-scale: 0.95;
+  }
+
+  .zoom-out-95 {
+    --tw-exit-scale: 0.95;
+  }
+
+  .slide-in-from-top-2 {
+    --tw-enter-translate-y: -0.5rem;
+  }
+
+  .slide-in-from-bottom-2 {
+    --tw-enter-translate-y: 0.5rem;
+  }
+
+  .slide-in-from-left-2 {
+    --tw-enter-translate-x: -0.5rem;
+  }
+
+  .slide-in-from-right-2 {
+    --tw-enter-translate-x: 0.5rem;
+  }
+
+  .slide-out-to-top-\[48\%\] {
+    --tw-exit-translate-y: -48%;
+  }
+
+  .slide-out-to-left-1\/2 {
+    --tw-exit-translate-x: -50%;
+  }
+
+  .slide-in-from-top-\[48\%\] {
+    --tw-enter-translate-y: -48%;
+  }
+
+  .slide-in-from-left-1\/2 {
+    --tw-enter-translate-x: -50%;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1));
+  }
+}
+
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1));
+  }
+}
