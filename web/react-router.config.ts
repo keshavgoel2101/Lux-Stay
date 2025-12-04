@@ -3,7 +3,7 @@ import type { Config } from '@react-router/dev/config';
  
 export default {
   // Config options...
-  // Server-side render by default, to enable SPA mode set this to `false`
+  // Disable SSR for SPA mode - forms and buttons handle client-side
   ssr: false,
   presets: [vercelPreset()],
 } satisfies Config;
