@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "bun dist/index.js",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "dev": "bun --hot src/index.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
