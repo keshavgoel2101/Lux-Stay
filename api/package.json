@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "bun dist/index.js",
-    "build": "prisma generate && tsc",
+    "build": "tsc && tsc-alias",
     "dev": "bun --hot src/index.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
@@ -23,6 +23,7 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
+    "tsc-alias": "^1.8.16",
     "zod": "^3.23.8"
   },
   "devDependencies": {
