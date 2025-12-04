@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  hotels       Hotel[]
+  reservations Reservation[]
+}
+
+enum UserRole {
+  CLIENT
+  HOTEL_OWNER
+  ADMIN
+}
+
+// Hotel model - managed by hotel owners
+model Hotel {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  address     String
+  city        String
+  country     String
+  rating      Float    @default(0)
+  images      String[] // Array of image URLs
+  amenities   String[] // Array of amenities
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  rooms   Room[]
+
+  @@index([city])
+  @@index([country])
+  @@index([ownerId])
+}
+
+// Room model - belongs to a hotel
+model Room {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  roomType    RoomType
+  pricePerNight Float
+  capacity    Int
+  images      String[]
+  amenities   String[]
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  hotelId      String
+  hotel        Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+
+  @@index([hotelId])
+  @@index([roomType])
+  @@index([pricePerNight])
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  TWIN
+  SUITE
+  DELUXE
+  PENTHOUSE
+}
+
+// Reservation model - clients book rooms
+model Reservation {
+  id            String            @id @default(uuid())
+  checkInDate   DateTime
+  checkOutDate  DateTime
+  totalPrice    Float
+  guestCount    Int
+  status        ReservationStatus @default(PENDING)
+  specialRequests String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  // Relations
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([roomId])
+  @@index([status])
+  @@index([checkInDate, checkOutDate])
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
